@@ -1,584 +1,288 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Feliz Día de las Flores Amarillas</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#050506">
+<title>Un jardín entero para ti 🌻</title>
+<style>
+:root{
+  --bg:#040405;--bg2:#0a090d;--gold:#ffd84e;--gold2:#ffba22;--green:#bceea6;
+  --cyan:#5cecff;--paper:#fffdf7;--ink:#34291d;--pink:#ffadd8;--violet:#ae90ff;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;min-height:100%;background:var(--bg);color:#fff;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+body{overscroll-behavior:none}
+button{font:inherit}
+.page{min-height:100dvh;position:relative;overflow:hidden;background:
+ radial-gradient(circle at 50% 8%,rgba(255,215,82,.09),transparent 23%),
+ radial-gradient(circle at 10% 45%,rgba(173,117,255,.08),transparent 28%),
+ radial-gradient(circle at 90% 66%,rgba(59,219,255,.07),transparent 25%),
+ linear-gradient(180deg,#050506 0%,#09070c 64%,#050506 100%)}
+.page:after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 18%,transparent 82%,rgba(255,255,255,.02))}
+.ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.orb{position:absolute;border-radius:50%;filter:blur(72px);opacity:.12;animation:drift 16s ease-in-out infinite alternate}
+.orb.a{width:45vw;height:45vw;left:-15vw;top:10vh;background:#ffd14e}.orb.b{width:35vw;height:35vw;right:-12vw;top:34vh;background:#8654ff;animation-delay:-5s}.orb.c{width:32vw;height:32vw;left:35vw;bottom:-18vw;background:#32e3f0;animation-delay:-9s}
+@keyframes drift{to{transform:translate3d(6vw,-4vh,0) scale(1.1)}}
+.hero{position:relative;z-index:2;min-height:100dvh;display:flex;flex-direction:column;align-items:center;text-align:center;padding:calc(env(safe-area-inset-top) + 14px) 14px 40px}
+.badge{padding:8px 12px;border-radius:999px;border:1px solid rgba(255,216,78,.2);background:rgba(255,216,78,.05);color:#ffe995;font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;box-shadow:0 0 28px rgba(255,215,78,.06)}
+.title{margin:15px 0 0;max-width:780px;font-size:clamp(30px,8.5vw,64px);line-height:.98;letter-spacing:-.05em;font-weight:950;color:var(--gold);text-shadow:0 0 16px rgba(255,216,78,.38),0 0 60px rgba(255,178,25,.15)}
+.title span{color:#fff}
+.sub{margin:10px 0 0;max-width:680px;color:var(--green);font-size:clamp(13px,3.4vw,19px);line-height:1.45;font-weight:700;text-shadow:0 0 14px rgba(188,238,166,.12)}
 
-    body {
-      background: #000;
-      color: white;
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      overflow: hidden;
-      height: 100vh;
-      width: 100vw;
-      position: relative;
-      user-select: none;
-    }
+.stage{position:relative;width:min(100%,820px);height:min(65vh,650px);min-height:510px;margin:4px auto 0;touch-action:none}
+.ground{position:absolute;left:50%;bottom:4%;width:78%;height:18%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(72,231,255,.22),transparent 68%);filter:blur(18px)}
+.keyboard{position:absolute;left:50%;bottom:-1%;transform:translateX(-50%) perspective(850px) rotateX(61deg);transform-origin:center bottom;width:132%;height:31%;border-radius:30px 30px 0 0;background:linear-gradient(180deg,#10202a,#061016);border:1px solid rgba(92,236,255,.24);box-shadow:0 -12px 55px rgba(25,220,255,.18),inset 0 0 55px rgba(49,240,255,.055);padding:10px;opacity:.9}
+.keys{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;height:100%}
+.key{border-radius:7px;border:1px solid rgba(92,236,255,.3);background:linear-gradient(180deg,#152631,#07131b);box-shadow:0 0 8px rgba(38,231,255,.18);position:relative}.key:after{content:"";position:absolute;inset:4px;border-radius:3px;background:radial-gradient(circle at 30% 30%,rgba(88,242,255,.2),transparent 55%)}
 
-    /* ========== ESCENAS ========== */
-    .scene {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.9s ease;
-    }
+.bouquet{position:absolute;left:50%;bottom:9%;width:74%;height:72%;transform:translateX(-50%);z-index:4}
+.stem{position:absolute;left:50%;bottom:8%;width:7px;height:60%;border-radius:999px;background:linear-gradient(#9dff7c,#25863d);box-shadow:0 0 12px rgba(93,255,125,.24);transform-origin:bottom;z-index:3}
+.stem.s2{height:53%;left:43%;transform:rotate(-17deg)}.stem.s3{height:56%;left:57%;transform:rotate(16deg)}.stem.s4{height:42%;left:38%;transform:rotate(-28deg)}.stem.s5{height:44%;left:62%;transform:rotate(29deg)}
+.leaf{position:absolute;width:82px;height:31px;border-radius:100% 0 100% 0;background:linear-gradient(90deg,#8cff88,#1d7f3e);filter:drop-shadow(0 0 7px rgba(66,226,90,.2));z-index:4}.l1{left:26%;bottom:27%;transform:rotate(-26deg)}.l2{right:25%;bottom:34%;transform:rotate(26deg) scaleX(-1)}.l3{left:25%;bottom:42%;transform:rotate(-35deg)}.l4{right:23%;bottom:44%;transform:rotate(36deg) scaleX(-1)}
+.glass{position:absolute;left:50%;bottom:4%;width:66%;height:50%;transform:translateX(-50%);clip-path:polygon(13% 0,87% 0,100% 100%,50% 87%,0 100%);border:1px solid rgba(255,207,238,.32);background:linear-gradient(155deg,rgba(255,183,224,.24),rgba(158,118,255,.17) 48%,rgba(255,105,197,.1));backdrop-filter:blur(10px);box-shadow:inset 0 0 42px rgba(255,255,255,.05),0 0 60px rgba(179,93,255,.11);z-index:5}
+.glass:before{content:"";position:absolute;left:10%;right:10%;top:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent)}
+.ribbon{position:absolute;left:50%;bottom:1%;transform:translateX(-50%);z-index:12;padding:9px 13px;border-radius:999px;background:rgba(5,7,10,.62);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px);font-size:10px;color:#e9e5ee;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
 
-    .scene.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
+/* Cartas integradas: cada nota blanca se esconde directamente detrás de su flor. */
+.note{position:absolute;width:104px;height:82px;border-radius:15px;background:linear-gradient(145deg,#fff,#f3ede3);border:1px solid rgba(255,255,255,.9);box-shadow:0 13px 28px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.98);z-index:6;overflow:hidden;opacity:.98;transform:rotate(var(--r)) translateY(6px)}
+.note:before{content:"";position:absolute;left:0;right:0;top:0;height:51%;background:linear-gradient(155deg,#fffefc,#e9e3d9);clip-path:polygon(0 0,100% 0,50% 78%);opacity:.92}.note:after{content:"✦";position:absolute;right:8px;bottom:6px;color:#d8b36a;font-size:13px;opacity:.8}
+.n1{left:23%;bottom:25%;--r:-8deg}.n2{left:39%;bottom:40%;--r:7deg}.n3{left:59%;bottom:40%;--r:-7deg}.n4{left:70%;bottom:28%;--r:8deg}.n5{left:10%;bottom:45%;--r:-10deg}.n6{left:31%;bottom:55%;--r:8deg}.n7{left:51%;bottom:58%;--r:-6deg}.n8{left:72%;bottom:47%;--r:10deg}
+.flower{position:absolute;width:108px;height:108px;padding:0;border:0;background:transparent;cursor:pointer;z-index:20;filter:drop-shadow(0 0 14px rgba(255,209,59,.24));transition:transform .22s ease;touch-action:manipulation;opacity:0;transform:scale(.15)}
+.flower.bloomed{animation:bloomIn .95s cubic-bezier(.18,.89,.32,1.12) forwards}.flower:hover{filter:drop-shadow(0 0 20px rgba(255,223,102,.42))}
+.flower.active{animation:tapBloom .62s ease}
+/* Cuando una carta ya fue leída, su flor se retira suavemente del ramo. */
+.flower.read{animation:flowerRetreat .7s cubic-bezier(.2,.85,.3,1) forwards!important;pointer-events:none;filter:drop-shadow(0 0 4px rgba(255,209,59,.10))}
+@keyframes bloomIn{0%{opacity:0;transform:scale(.12) rotate(-14deg) translateY(18px)}55%{opacity:1;transform:scale(1.13) rotate(2deg) translateY(-2px)}100%{opacity:1;transform:scale(1) rotate(0) translateY(0)}}
+@keyframes tapBloom{0%{transform:scale(1)}45%{transform:scale(1.16) rotate(-2deg)}100%{transform:scale(1)}}
+@keyframes flowerRetreat{0%{opacity:1;transform:scale(1) translateY(0) rotate(0)}45%{opacity:.82;transform:scale(.86) translateY(8px) rotate(-3deg)}100%{opacity:.16;transform:scale(.48) translateY(24px) rotate(4deg);filter:blur(1px)}}
+.bouquet.resetting .flower{animation:none!important}
+.petal{position:absolute;left:50%;top:50%;width:30px;height:65px;margin:-32.5px -15px;border-radius:50%;background:linear-gradient(180deg,#fff16b 0%,#ffd23f 50%,#eaa316 100%);transform-origin:50% 100%;box-shadow:0 0 7px rgba(255,211,62,.36)}
+.petal:nth-child(1){transform:rotate(0)}.petal:nth-child(2){transform:rotate(45deg)}.petal:nth-child(3){transform:rotate(90deg)}.petal:nth-child(4){transform:rotate(135deg)}.petal:nth-child(5){transform:rotate(180deg)}.petal:nth-child(6){transform:rotate(225deg)}.petal:nth-child(7){transform:rotate(270deg)}.petal:nth-child(8){transform:rotate(315deg)}
+.center{position:absolute;left:50%;top:50%;width:40px;height:40px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 32% 28%,#9e711f,#513109 58%,#231506 100%);box-shadow:0 0 0 4px rgba(111,69,7,.3),0 0 18px rgba(94,54,0,.35)}
+.f1{left:7%;bottom:30%;--delay:.7s}.f2{left:27%;bottom:39%;--delay:1.08s}.f3{left:48%;bottom:43%;--delay:1.46s}.f4{left:69%;bottom:32%;--delay:1.82s}.f5{left:18%;bottom:57%;--delay:2.14s}.f6{left:40%;bottom:65%;--delay:2.46s}.f7{left:61%;bottom:62%;--delay:2.78s}.f8{left:80%;bottom:51%;--delay:3.1s}
+.hint{position:absolute;right:4px;bottom:6px;width:11px;height:11px;border-radius:50%;background:#fff9c6;box-shadow:0 0 0 3px rgba(255,216,77,.18),0 0 14px rgba(255,216,77,.85);z-index:30}
+.breath{position:absolute;left:50%;top:50%;width:210px;height:210px;border-radius:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,216,77,.18);box-shadow:0 0 55px rgba(255,216,77,.08);animation:pulse 2.8s ease-in-out infinite;pointer-events:none;z-index:1}
+@keyframes pulse{50%{transform:translate(-50%,-50%) scale(1.18);opacity:.45}}
 
-    /* ========== TECLADO ========== */
-    .keyboard {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 32%;
-      background: linear-gradient(to top, #0a0a12, #000);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 8px 4px 12px;
-      z-index: 10;
-    }
+.intro-spark{position:absolute;width:7px;height:7px;border-radius:50%;background:#fff4a1;box-shadow:0 0 14px #ffe072;pointer-events:none;z-index:16;opacity:0}
+@keyframes spark{0%{opacity:0;transform:translate(0,10px) scale(.2)}25%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.4)}}
 
-    .keyboard-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center bottom, rgba(0, 180, 255, 0.25) 0%, transparent 70%);
-      pointer-events: none;
-    }
+.message{position:relative;z-index:2;width:min(100%,780px);margin:0 auto;text-align:center;padding:12px 16px 36px}.message .big{font-size:clamp(24px,7vw,41px);font-weight:950;color:var(--gold);letter-spacing:-.035em;text-shadow:0 0 20px rgba(255,214,77,.2)}.message p{margin:9px auto 0;max-width:690px;color:#e5e1e8;font-size:14px;line-height:1.62}.message strong{color:#fff}
+.more-wrap{position:relative;z-index:4;padding:10px 14px 80px;text-align:center}.more-note{font-size:12px;color:#bab4c4;margin-bottom:8px}.more-btn{border:1px solid rgba(255,216,77,.45);background:linear-gradient(180deg,rgba(255,216,77,.12),rgba(255,185,28,.07));color:#ffea9f;padding:14px 18px;border-radius:999px;font-weight:950;letter-spacing:.03em;box-shadow:0 0 28px rgba(255,214,77,.08),inset 0 1px 0 rgba(255,255,255,.08);cursor:pointer}.more-btn:active{transform:scale(.98)}
 
-    .key-row {
-      display: flex;
-      justify-content: center;
-      gap: 3px;
-      margin-bottom: 3px;
-    }
+.particle{position:fixed;z-index:10;width:7px;height:7px;border-radius:50%;background:#ffe26a;box-shadow:0 0 12px rgba(255,211,76,.75);pointer-events:none;opacity:.7;animation:float var(--d) ease-in-out infinite;animation-delay:var(--delay);left:var(--x);top:var(--y)}
+.particle.flower{width:16px;height:16px;background:transparent;box-shadow:none}.particle.flower:before{content:"✿";color:#ffd84e;font-size:16px;text-shadow:0 0 10px rgba(255,211,61,.5)}
+@keyframes float{50%{transform:translate3d(var(--dx),calc(var(--dy)*-1),0) rotate(16deg);opacity:1}}
 
-    .key {
-      background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
-      border: 1px solid #2a2a4a;
-      border-radius: 4px;
-      color: #8af;
-      font-size: 9px;
-      font-weight: 600;
-      height: 22px;
-      min-width: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 
-        0 0 6px rgba(0, 150, 255, 0.4),
-        inset 0 0 4px rgba(0, 100, 200, 0.3);
-      text-shadow: 0 0 4px #0af;
-    }
+.reader{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:10px;opacity:0;visibility:hidden;pointer-events:none;background:rgba(2,2,4,.72);backdrop-filter:blur(17px);transition:opacity .28s ease,visibility .28s ease}.reader.show{opacity:1;visibility:visible;pointer-events:auto}
+.reader-card{position:relative;width:min(96vw,760px);height:min(90dvh,820px);overflow:auto;border-radius:28px;padding:18px;background:linear-gradient(180deg,#fffefa,#f6eee1);border:1px solid rgba(255,255,255,.9);box-shadow:0 30px 80px rgba(0,0,0,.46);color:var(--ink);transform:translateY(20px) scale(.97);transition:transform .35s cubic-bezier(.18,.89,.32,1.12)}.reader.show .reader-card{transform:translateY(0) scale(1)}
+.reader-inner{min-height:100%;border:1px dashed rgba(117,91,45,.24);border-radius:20px;padding:24px 20px 28px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}.reader-close{position:absolute;top:10px;right:10px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(94,65,30,.12);background:#fffaf0;color:#4c3a25;font-size:30px;line-height:1;cursor:pointer;box-shadow:0 5px 18px rgba(76,48,11,.08)}
+.reader-top{width:100%;display:flex;justify-content:space-between;align-items:center;color:#806a4b;font-size:11px;font-weight:900;letter-spacing:.11em;text-transform:uppercase}.reader-seal{font-size:22px}.reader-flower{font-size:56px;filter:drop-shadow(0 0 18px rgba(255,198,50,.25));margin:14px 0 4px}.reader h2{margin:0;color:#7a4d16;font-size:clamp(25px,7vw,42px);line-height:1.05;letter-spacing:-.04em}.reader p{max-width:610px;margin:16px auto 0;color:#4b3b28;font-size:clamp(16px,4.2vw,20px);line-height:1.65}.reader-foot{margin-top:18px;color:#856f50;font-size:12px;line-height:1.4}.reader-extra{margin-top:18px;padding:10px 12px;border-radius:12px;background:rgba(255,216,77,.12);color:#76572b;font-size:12px;font-weight:800}
 
-    .key.wide { min-width: 32px; }
-    .key.space { min-width: 110px; }
+.toast{position:fixed;left:50%;bottom:22px;z-index:210;transform:translate(-50%,18px);padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:12px;backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
 
-    /* ========== TEXTO SUPERIOR ========== */
-    .top-text {
-      position: absolute;
-      top: 8%;
-      left: 0;
-      right: 0;
-      text-align: center;
-      z-index: 20;
-      padding: 0 16px;
-    }
+/* Jardín veloz: canvas para mantener 1000+ flores fluidas en móvil. */
+.field{position:fixed;inset:0;z-index:400;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .65s ease,visibility .65s ease;background:#8cc9d7;overflow:hidden}.field.show{opacity:1;visibility:visible;pointer-events:auto}.field canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.field-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 43%,rgba(255,255,255,.0) 0 20%,rgba(0,0,0,.08) 50%,rgba(0,0,0,.42) 100%),linear-gradient(90deg,rgba(255,221,106,.13),transparent 22%,transparent 78%,rgba(255,221,106,.13));mix-blend-mode:multiply}.field-glow{position:absolute;left:50%;top:31%;width:38vw;height:30vw;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,238,166,.45),rgba(255,236,170,0) 72%);filter:blur(24px);pointer-events:none;z-index:1}.field-copy{position:relative;z-index:3;max-width:760px;padding:25px;text-align:center;color:rgba(255,249,215,.92);text-shadow:0 1px 3px rgba(50,39,15,.35),0 0 18px rgba(255,239,177,.35);font-size:clamp(22px,6vw,46px);line-height:1.12;font-weight:950;letter-spacing:-.035em;opacity:.82;animation:copyPulse 4.5s ease-in-out infinite;pointer-events:none}.field-copy span{display:inline-block;opacity:.86}.field-copy small{display:block;margin-top:12px;color:rgba(255,255,255,.82);font-size:12px;font-weight:750;letter-spacing:.03em;opacity:.7;text-shadow:0 1px 4px rgba(0,0,0,.28)}.field-close{position:absolute;right:14px;top:calc(env(safe-area-inset-top) + 14px);z-index:6;border:1px solid rgba(255,255,255,.42);background:rgba(255,255,255,.16);color:#fff;border-radius:999px;padding:10px 13px;font-size:12px;backdrop-filter:blur(12px);cursor:pointer;box-shadow:0 8px 25px rgba(0,0,0,.12)}.field-status{position:absolute;left:14px;bottom:calc(env(safe-area-inset-bottom) + 14px);z-index:6;color:rgba(255,255,255,.72);font-size:10px;letter-spacing:.1em;text-transform:uppercase;text-shadow:0 1px 3px rgba(0,0,0,.3)}.field.show .field-copy{animation:copyPulse 4.5s ease-in-out infinite}
+@keyframes copyPulse{0%,100%{opacity:.55;transform:scale(.98)}50%{opacity:.96;transform:scale(1.015)}}
 
-    .main-title {
-      font-size: clamp(1.3rem, 5vw, 1.8rem);
-      font-weight: 700;
-      color: #ffd700;
-      text-shadow: 
-        0 0 10px #ffd700,
-        0 0 20px #ffaa00,
-        0 0 30px #ff8800;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-
-    .subtitle {
-      font-size: clamp(0.95rem, 3.5vw, 1.15rem);
-      color: #a8ff9e;
-      text-shadow: 0 0 8px #6f6;
-      font-weight: 500;
-    }
-
-    /* ========== TEXTO INFERIOR ========== */
-    .bottom-text {
-      position: absolute;
-      bottom: 34%;
-      left: 0;
-      right: 0;
-      text-align: center;
-      z-index: 20;
-      padding: 0 12px;
-    }
-
-    .bottom-text p {
-      font-size: clamp(1rem, 4.2vw, 1.35rem);
-      font-weight: 800;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      line-height: 1.35;
-      text-shadow: 
-        0 2px 4px #000,
-        0 0 12px rgba(0,0,0,0.8);
-    }
-
-    /* ========== RAMO DE GIRASOLES ========== */
-    .bouquet-container {
-      position: relative;
-      width: 280px;
-      height: 320px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      z-index: 15;
-      transform-origin: bottom center;
-    }
-
-    .vase {
-      position: absolute;
-      bottom: 0;
-      width: 110px;
-      height: 130px;
-      background: linear-gradient(160deg, 
-        rgba(255, 140, 200, 0.45),
-        rgba(180, 100, 220, 0.35),
-        rgba(255, 160, 180, 0.4));
-      border-radius: 8px 8px 40px 40px;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 200, 255, 0.3);
-      box-shadow: 
-        0 0 20px rgba(255, 100, 180, 0.3),
-        inset 0 0 20px rgba(255, 255, 255, 0.15);
-      z-index: 5;
-      overflow: hidden;
-    }
-
-    .vase::before {
-      content: '';
-      position: absolute;
-      top: 15%;
-      left: 10%;
-      width: 40%;
-      height: 50%;
-      background: linear-gradient(135deg, rgba(255,255,255,0.35), transparent);
-      border-radius: 50%;
-      filter: blur(4px);
-    }
-
-    .sunflower {
-      position: absolute;
-      width: 70px;
-      height: 70px;
-      transform-origin: center bottom;
-      opacity: 0;
-      scale: 0.2;
-    }
-
-    .sunflower .petals {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at center, #ffcc00 30%, #ffaa00 70%);
-      border-radius: 50%;
-      box-shadow: 0 0 12px #ffcc00;
-    }
-
-    .sunflower .petals::before {
-      content: '';
-      position: absolute;
-      inset: -8px;
-      background: 
-        radial-gradient(circle at 50% 0%, #ffd700 12%, transparent 13%),
-        radial-gradient(circle at 85% 25%, #ffd700 12%, transparent 13%),
-        radial-gradient(circle at 85% 75%, #ffd700 12%, transparent 13%),
-        radial-gradient(circle at 50% 100%, #ffd700 12%, transparent 13%),
-        radial-gradient(circle at 15% 75%, #ffd700 12%, transparent 13%),
-        radial-gradient(circle at 15% 25%, #ffd700 12%, transparent 13%),
-        radial-gradient(circle at 50% 50%, #ffd700 12%, transparent 13%);
-      border-radius: 50%;
-    }
-
-    .sunflower .center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 28px;
-      height: 28px;
-      background: #1a1200;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      box-shadow: inset 0 0 6px #000;
-      z-index: 2;
-    }
-
-    .stem {
-      position: absolute;
-      bottom: 60px;
-      width: 6px;
-      height: 0;
-      background: linear-gradient(to top, #2d5a1e, #4a8c2a);
-      border-radius: 3px;
-      z-index: 4;
-      transition: height 1.2s ease-out;
-    }
-
-    .leaf {
-      position: absolute;
-      width: 28px;
-      height: 14px;
-      background: #3a7a28;
-      border-radius: 50% 0 50% 0;
-      opacity: 0;
-      z-index: 3;
-    }
-
-    /* Posiciones de los girasoles */
-    .sf1 { bottom: 110px; left: 50%; margin-left: -35px; z-index: 10; }
-    .sf2 { bottom: 130px; left: 28%; z-index: 9; }
-    .sf3 { bottom: 130px; right: 28%; z-index: 9; }
-    .sf4 { bottom: 155px; left: 38%; z-index: 8; }
-    .sf5 { bottom: 155px; right: 38%; z-index: 8; }
-    .sf6 { bottom: 175px; left: 50%; margin-left: -30px; z-index: 7; }
-
-    /* ========== PARTÍCULAS ========== */
-    .particle {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: #ffd700;
-      border-radius: 50%;
-      opacity: 0;
-      pointer-events: none;
-      box-shadow: 0 0 6px #ffd700;
-      z-index: 12;
-    }
-
-    .particle.flower {
-      background: transparent;
-      box-shadow: none;
-      width: 14px;
-      height: 14px;
-    }
-
-    .particle.flower::before {
-      content: '❀';
-      font-size: 12px;
-      color: #ffd700;
-      text-shadow: 0 0 6px #ffaa00;
-    }
-
-    /* ========== TARJETAS DE GATOS ========== */
-    .cards-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-      z-index: 30;
-      padding: 20px;
-      max-width: 340px;
-      width: 90%;
-    }
-
-    .card {
-      background: linear-gradient(145deg, #f8f4ff, #fff0f5);
-      border-radius: 20px;
-      padding: 20px 18px;
-      text-align: center;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,200,220,0.4);
-      opacity: 0;
-      transform: scale(0.85) translateY(30px);
-      transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-
-    .card.show {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-
-    .card-cats {
-      font-size: 48px;
-      margin-bottom: 12px;
-      line-height: 1;
-    }
-
-    .card h3 {
-      color: #d4a017;
-      font-size: 1.25rem;
-      margin-bottom: 8px;
-      font-weight: 700;
-    }
-
-    .card p {
-      color: #444;
-      font-size: 0.92rem;
-      line-height: 1.45;
-    }
-
-    /* ========== PANTALLA FINAL TIKTOK ========== */
-    .tiktok-end {
-      background: #000;
-      z-index: 50;
-    }
-
-    .tiktok-logo {
-      font-size: 64px;
-      margin-bottom: 12px;
-      filter: drop-shadow(0 0 12px rgba(255,0,80,0.5));
-    }
-
-    .tiktok-text {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -1px;
-      margin-bottom: 28px;
-      background: linear-gradient(90deg, #25f4ee, #fe2c55);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .search-bar {
-      background: #1a1a1a;
-      border: 1px solid #333;
-      border-radius: 50px;
-      padding: 12px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 260px;
-      box-shadow: 0 0 20px rgba(254, 44, 85, 0.2);
-    }
-
-    .search-bar span {
-      color: #aaa;
-      font-size: 1rem;
-    }
-
-    .search-bar strong {
-      color: #fff;
-    }
-
-    /* ========== ANIMACIONES ========== */
-    @keyframes growStem {
-      to { height: 90px; }
-    }
-
-    @keyframes bloom {
-      0% { opacity: 0; transform: scale(0.2) rotate(-20deg); }
-      60% { opacity: 1; transform: scale(1.1) rotate(5deg); }
-      100% { opacity: 1; transform: scale(1) rotate(0deg); }
-    }
-
-    @keyframes floatParticle {
-      0% { opacity: 0; transform: translateY(0) scale(0.5); }
-      20% { opacity: 0.9; }
-      80% { opacity: 0.7; }
-      100% { opacity: 0; transform: translateY(-180px) translateX(var(--x)) scale(1); }
-    }
-
-    @keyframes leafIn {
-      to { opacity: 1; }
-    }
-
-    /* Clases de control */
-    .bouquet-container.growing .stem {
-      animation: growStem 1.4s ease-out forwards;
-    }
-
-    .bouquet-container.growing .leaf {
-      animation: leafIn 0.6s ease forwards;
-    }
-
-    .bouquet-container.growing .sf1 { animation: bloom 0.9s 0.8s ease forwards; }
-    .bouquet-container.growing .sf2 { animation: bloom 0.9s 1.1s ease forwards; }
-    .bouquet-container.growing .sf3 { animation: bloom 0.9s 1.3s ease forwards; }
-    .bouquet-container.growing .sf4 { animation: bloom 0.9s 1.6s ease forwards; }
-    .bouquet-container.growing .sf5 { animation: bloom 0.9s 1.8s ease forwards; }
-    .bouquet-container.growing .sf6 { animation: bloom 0.9s 2.1s ease forwards; }
-  </style>
+@media (min-width:760px){.hero{padding-top:28px}.stage{height:650px}.flower{width:116px;height:116px}.note{width:110px}.message{padding-top:2px}}
+@media (max-width:560px){.stage{height:59vh;min-height:490px}.bouquet{width:82%;height:70%}.flower{width:88px;height:88px}.note{width:84px;height:66px;border-radius:12px}.petal{width:24px;height:53px;margin:-26.5px -12px}.center{width:32px;height:32px}.leaf{width:58px;height:23px}.keyboard{width:148%;height:29%}.ribbon{max-width:94%;overflow:hidden;text-overflow:ellipsis}.f1{left:2%;bottom:29%}.f2{left:24%;bottom:38%}.f3{left:47%;bottom:42%}.f4{left:69%;bottom:30%}.f5{left:13%;bottom:55%}.f6{left:37%;bottom:64%}.f7{left:59%;bottom:61%}.f8{left:80%;bottom:49%}.n1{left:4%;bottom:25%}.n2{left:26%;bottom:39%}.n3{left:49%;bottom:40%}.n4{left:71%;bottom:26%}.n5{left:8%;bottom:45%}.n6{left:31%;bottom:54%}.n7{left:53%;bottom:57%}.n8{left:73%;bottom:45%}.reader{padding:8px}.reader-card{width:97vw;height:90dvh;border-radius:24px;padding:15px}.reader-inner{padding:22px 16px 22px}.reader p{font-size:16px}.message p{font-size:13px}.field-copy{padding:28px 24px}.more-wrap{padding-bottom:70px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+</style>
 </head>
 <body>
+<div class="page" id="page">
+  <div class="ambient"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
+  <main class="hero">
+    <div class="badge">21 de septiembre · para ti 🌻</div>
+    <h1 class="title">Feliz día de las flores amarillas <span>✨</span></h1>
+    <p class="sub">Ten tu ramo, bonita. Espera un momento… las flores van a aparecer una por una, como si este detalle estuviera naciendo delante de ti.</p>
 
-  <!-- ESCENA 1: Ramo -->
-  <div class="scene active" id="scene1">
-    <div class="top-text">
-      <div class="main-title">Feliz día de las flores amarillas</div>
-      <div class="subtitle">Ten tu ramo bonita</div>
+    <section class="stage" id="stage" aria-label="Ramo interactivo de ocho girasoles con ocho cartas escondidas detrás">
+      <div class="ground"></div><div class="breath"></div>
+      <div class="keyboard"><div class="keys" id="keys"></div></div>
+      <div class="bouquet" id="bouquet">
+        <div class="note n1"></div><div class="note n2"></div><div class="note n3"></div><div class="note n4"></div><div class="note n5"></div><div class="note n6"></div><div class="note n7"></div><div class="note n8"></div>
+        <div class="stem"></div><div class="stem s2"></div><div class="stem s3"></div><div class="stem s4"></div><div class="stem s5"></div>
+        <div class="leaf l1"></div><div class="leaf l2"></div><div class="leaf l3"></div><div class="leaf l4"></div>
+        <div class="glass"></div>
+        <button class="flower f1" data-letter="0" aria-label="Abrir carta 1"><span class="hint"></span></button>
+        <button class="flower f2" data-letter="1" aria-label="Abrir carta 2"><span class="hint"></span></button>
+        <button class="flower f3" data-letter="2" aria-label="Abrir carta 3"><span class="hint"></span></button>
+        <button class="flower f4" data-letter="3" aria-label="Abrir carta 4"><span class="hint"></span></button>
+        <button class="flower f5" data-letter="4" aria-label="Abrir carta 5"><span class="hint"></span></button>
+        <button class="flower f6" data-letter="5" aria-label="Abrir carta 6"><span class="hint"></span></button>
+        <button class="flower f7" data-letter="6" aria-label="Abrir carta 7"><span class="hint"></span></button>
+        <button class="flower f8" data-letter="7" aria-label="Abrir carta 8"><span class="hint"></span></button>
+      </div>
+      <div class="ribbon">Toca cualquier girasol · cada uno guarda una carta ✦</div>
+    </section>
+
+    <section class="message">
+      <div class="big">NO ERES ESPECTADORA. 💛</div>
+      <p>Y sí: <strong>reto a cualquiera a tratar de copiarme jaja</strong>. Porque un detalle bonito no está en cuánto cuesta, sino en cuánto te hizo pensar en alguien. Ojalá este ramo te recuerde que también puedes bajar un poquito la guardia, descansar, reírte y ser tú misma.</p>
+    </section>
+
+    <section class="more-wrap">
+      <div class="more-note">Y todavía me quedé con ganas de darte más…</div>
+      <button class="more-btn" id="moreBtn">🌼 Si quieres más flores, acá están 🌼</button>
+    </section>
+  </main>
+</div>
+
+<div class="reader" id="reader" aria-hidden="true">
+  <article class="reader-card" id="readerCard">
+    <div class="reader-inner">
+      <button class="reader-close" id="readerClose" aria-label="Cerrar carta">×</button>
+      <div class="reader-top"><span id="readerLabel">Para ti · 01</span><span>🌻</span></div>
+      <div class="reader-flower">🌻</div>
+      <h2 id="readerTitle"></h2>
+      <p id="readerText"></p>
+      <div class="reader-extra" id="readerExtra"></div>
+      <div class="reader-foot">Cuando termines, toca cualquier parte fuera de la carta para cerrarla y volver al ramo.</div>
     </div>
+  </article>
+</div>
+<div class="toast" id="toast">💌 carta abierta</div>
 
-    <div class="bouquet-container" id="bouquet">
-      <div class="stem"></div>
-      <div class="leaf" style="bottom: 100px; left: 95px; transform: rotate(-40deg);"></div>
-      <div class="leaf" style="bottom: 115px; right: 95px; transform: rotate(40deg) scaleX(-1);"></div>
+<div class="field" id="field" aria-hidden="true">
+  <canvas id="fieldCanvas"></canvas>
+  <div class="field-glow"></div><div class="field-vignette"></div>
+  <div class="field-copy" id="fieldCopy">No podía quedarme con las ganas de darte un par de flores…<br><span style="color:#fff">prefiero darte un jardín entero de ellas.</span><small>Mira cómo el camino se llena de flores… despacio, como si corrieras hacia un jardín sin final ✨</small></div>
+  <button class="field-close" id="fieldClose">↩ Volver al ramo</button>
+  <div class="field-status">jardín infinito · 1250 flores activas</div>
+</div>
 
-      <div class="sunflower sf1">
-        <div class="petals"></div>
-        <div class="center"></div>
-      </div>
-      <div class="sunflower sf2">
-        <div class="petals"></div>
-        <div class="center"></div>
-      </div>
-      <div class="sunflower sf3">
-        <div class="petals"></div>
-        <div class="center"></div>
-      </div>
-      <div class="sunflower sf4">
-        <div class="petals"></div>
-        <div class="center"></div>
-      </div>
-      <div class="sunflower sf5">
-        <div class="petals"></div>
-        <div class="center"></div>
-      </div>
-      <div class="sunflower sf6">
-        <div class="petals"></div>
-        <div class="center"></div>
-      </div>
+<script>
+const letters=[
+ {title:'Feliz día, bonita 🌻',text:'Feliz día de las flores amarillas. Espero que hoy tengas muchos motivos para sonreír. Quería darte algo que se sintiera especial, así que terminé armando todo este pequeño rincón para ti. Quizá sean solo flores, pero detrás de cada una hay un poquito de intención, cariño y unas ganas enormes de hacerte sonreír.',extra:'Que hoy te pase algo bonito que no estabas esperando. 💛'},
+ {title:'No soy el mejor… todavía',text:'Lamento no ser el mejor para ti. A veces siento que todavía me falta muchísimo, pero también sé que me estoy esforzando. Quiero aprender, mejorar y hacer las cosas con más cuidado. No quiero prometerte perfección; prefiero que algún día puedas mirar atrás y decir: “sí, lo intentó de verdad”.',extra:'Pequeños avances también cuentan. ✨'},
+ {title:'Aunque no nos conocemos tanto…',text:'Sé que tú y yo no nos conocemos mucho todavía, pero espero que puedas entender algo: te volviste alguien valioso para mí. Es raro cómo algunas personas llegan sin hacer ruido y, de pronto, empiezan a importar más de lo que uno había imaginado. Este ramo nació un poquito de eso.',extra:'A veces un detalle empieza una historia sin avisar. 🌼'},
+ {title:'Una de mis motivaciones',text:'Te has vuelto una de mis motivaciones para querer ser mejor cada día. No porque tengas que exigirme nada, ni porque yo espere algo de ti. Simplemente me gusta la idea de crecer, aprender, equivocarme y volver a intentarlo. Encontrar una razón bonita para mejorar también es una forma de agradecer que alguien exista.',extra:'Gracias por inspirar cosas bonitas sin siquiera proponértelo. 💫'},
+ {title:'No tienes que poder con todo',text:'Ojalá algún día puedas sentir que no tienes que cargar siempre con el “yo resuelvo” o “yo lo hago sola”. También está bien descansar, pedir ayuda, reírte, equivocarte y decir “hoy no puedo”. No quiero ser otra carga; solo quiero que este detalle te recuerde que también mereces un lugar donde puedas ser tú misma.',extra:'No tienes que demostrar tu fuerza todo el tiempo. 🤍'},
+ {title:'Quiero demostrar, no presumir',text:'No sé qué vaya a pasar mañana, y tampoco quiero hacer promesas gigantes. Prefiero dejar que mis detalles hablen por mí. Si digo que me estoy esforzando, quiero que con el tiempo se note. Porque para mí lo bonito no es decir “mira todo lo que hice”, sino lograr que un día puedas sentir: “sí, lo hizo con cariño”.',extra:'Los detalles también son una forma de decir “me importas”. 🌻'},
+ {title:'Guarda esta flor',text:'Entre todas estas flores, esta es para recordarte que mereces momentos suaves. Que no todo tiene que ser productividad, problemas, responsabilidades o demostrar que puedes sola. También puede haber días para respirar, mirar alrededor y dejarte querer un poquito por la vida.',extra:'Que nunca se te olvide darte permiso para disfrutar. ☀️'},
+ {title:'Y reto a cualquiera jaja',text:'Y sí… reto a cualquiera a tratar de copiarme jaja. Pero tendrá que copiar cada detalle, cada frase y cada flor escondida. Porque este ramo no salió de una plantilla cualquiera: salió de pensar qué podría hacerte sonreír, de imaginar cómo lo verías y de querer regalarte algo que no termine cuando cierres la página.',extra:'NO ERES ESPECTADORA. Eres la razón de este detalle. 💛'}
+];
 
-      <div class="vase"></div>
-    </div>
+const petal=`<span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="petal"></span><span class="center"></span>`;
+document.querySelectorAll('.flower').forEach(f=>f.insertAdjacentHTML('afterbegin',petal));
 
-    <div class="bottom-text">
-      <p>NO LA DEJES DE<br>ESPECTADORA ESTE 21<br>DE SEPTIEMBRE.</p>
-    </div>
+const keys=document.getElementById('keys');
+for(let i=0;i<84;i++){const k=document.createElement('div');k.className='key';keys.appendChild(k)}
+keys.querySelectorAll('.key').forEach(k=>k.addEventListener('pointerdown',()=>{k.style.boxShadow='0 0 23px rgba(77,240,255,.78),inset 0 0 14px rgba(77,240,255,.2)';setTimeout(()=>k.style.boxShadow='',200)}));
 
-    <div class="keyboard">
-      <div class="keyboard-glow"></div>
-      <div class="key-row">
-        <div class="key">Q</div><div class="key">W</div><div class="key">E</div><div class="key">R</div>
-        <div class="key">T</div><div class="key">Y</div><div class="key">U</div><div class="key">I</div>
-        <div class="key">O</div><div class="key">P</div>
-      </div>
-      <div class="key-row">
-        <div class="key">A</div><div class="key">S</div><div class="key">D</div><div class="key">F</div>
-        <div class="key">G</div><div class="key">H</div><div class="key">J</div><div class="key">K</div>
-        <div class="key">L</div><div class="key">Ñ</div>
-      </div>
-      <div class="key-row">
-        <div class="key">Z</div><div class="key">X</div><div class="key">C</div><div class="key">V</div>
-        <div class="key">B</div><div class="key">N</div><div class="key">M</div>
-        <div class="key wide">⌫</div>
-      </div>
-      <div class="key-row">
-        <div class="key wide">123</div>
-        <div class="key space">espacio</div>
-        <div class="key wide">↵</div>
-      </div>
-    </div>
-  </div>
+for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle'+(i%7===0?' flower':'');p.style.setProperty('--x',(2+Math.random()*96)+'vw');p.style.setProperty('--y',(3+Math.random()*90)+'vh');p.style.setProperty('--d',(5+Math.random()*8)+'s');p.style.setProperty('--delay',(-Math.random()*8)+'s');p.style.setProperty('--dx',((Math.random()-.5)*55)+'px');p.style.setProperty('--dy',(20+Math.random()*55)+'px');document.body.appendChild(p)}
 
-  <!-- ESCENA 2: Tarjetas -->
-  <div class="scene" id="scene2">
-    <div class="cards-container">
-      <div class="card" id="card1">
-        <div class="card-cats">🐱❤️🐱</div>
-        <h3>Para ti</h3>
-        <p>Las flores amarillas representan la luz, la alegría y la energía que traes a mi vida cada día.</p>
-      </div>
+// Entrada mágica: cada flor aparece poco a poco y con chispas alrededor.
+const flowers=[...document.querySelectorAll('.flower')];
+flowers.forEach((f,i)=>setTimeout(()=>{f.classList.add('bloomed');sparkBurst(f,8)},700+i*360));
+function sparkBurst(el,count=8){const r=el.getBoundingClientRect();for(let i=0;i<count;i++){const s=document.createElement('div');s.className='intro-spark';s.style.left=(r.left+r.width/2)+'px';s.style.top=(r.top+r.height/2)+'px';s.style.setProperty('--dx',((Math.random()-.5)*130)+'px');s.style.setProperty('--dy',(-20-Math.random()*110)+'px');s.style.animation=`spark ${600+Math.random()*600}ms ease-out ${Math.random()*120}ms forwards`;document.body.appendChild(s);s.addEventListener('animationend',()=>s.remove())}}
 
-      <div class="card" id="card2">
-        <div class="card-cats">😻💕</div>
-        <h3>Con mucho cariño</h3>
-        <p>Espero que este detalle ilumine tu día y te recuerde lo especial que eres para mí.</p>
-      </div>
-
-      <div class="card" id="card3">
-        <div class="card-cats">🐾✨</div>
-        <h3>¡Feliz día!</h3>
-        <p>Nunca dejes de brillar con esa sonrisa tan hermosa. ¡Te quiero muchísimo!</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ESCENA 3: TikTok End -->
-  <div class="scene tiktok-end" id="scene3">
-    <div class="tiktok-logo">🎵</div>
-    <div class="tiktok-text">TikTok</div>
-    <div class="search-bar">
-      <span>🔍</span>
-      <span><strong>@bcodepro</strong></span>
-    </div>
-  </div>
-
-  <script>
-    // Crear partículas
-    function createParticles() {
-      const scene = document.getElementById('scene1');
-      for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div');
-        p.className = Math.random() > 0.4 ? 'particle flower' : 'particle';
-        p.style.left = Math.random() * 100 + '%';
-        p.style.bottom = '35%';
-        p.style.setProperty('--x', (Math.random() * 120 - 60) + 'px');
-        p.style.animation = `floatParticle ${3 + Math.random() * 3}s ${Math.random() * 4}s infinite ease-out`;
-        scene.appendChild(p);
-      }
+const reader=document.getElementById('reader'),readerTitle=document.getElementById('readerTitle'),readerText=document.getElementById('readerText'),readerLabel=document.getElementById('readerLabel'),readerClose=document.getElementById('readerClose'),readerExtra=document.getElementById('readerExtra'),toast=document.getElementById('toast');
+let toastTimer;
+let activeLetter=-1;
+const readLetters=new Set();
+let bouquetCycle=1;
+function showToast(message,ms=1400){clearTimeout(toastTimer);toast.textContent=message;toast.classList.add('show');toastTimer=setTimeout(()=>toast.classList.remove('show'),ms)}
+function openLetter(index){activeLetter=index;readerTitle.textContent=letters[index].title;readerText.textContent=letters[index].text;readerLabel.textContent=`Para ti · ${String(index+1).padStart(2,'0')}`;readerExtra.textContent=letters[index].extra;reader.classList.add('show');reader.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';showToast(`💌 carta ${index+1} de 8`,1200)}
+function closeLetter(){
+  if(!reader.classList.contains('show'))return;
+  reader.classList.remove('show');reader.setAttribute('aria-hidden','true');document.body.style.overflow='';
+  if(activeLetter>=0){
+    const flower=flowers[activeLetter];
+    if(flower && !readLetters.has(activeLetter)){
+      readLetters.add(activeLetter);
+      flower.classList.remove('active');
+      void flower.offsetWidth;
+      flower.classList.add('read');
+      sparkBurst(flower,7);
     }
+  }
+  const finished=readLetters.size===flowers.length;
+  activeLetter=-1;
+  if(finished){
+    setTimeout(()=>resetBouquet(),520);
+  }
+}
+reader.addEventListener('pointerdown',e=>{if(e.target===reader)closeLetter()});readerCard.addEventListener('pointerdown',e=>e.stopPropagation());readerClose.addEventListener('click',e=>{e.stopPropagation();closeLetter()});
+flowers.forEach((flower,i)=>flower.addEventListener('click',e=>{e.stopPropagation();if(flower.classList.contains('read')){showToast('✨ Esta carta ya la leíste; vuelve a aparecer cuando termines las 8.',1900);return}flower.classList.remove('active');void flower.offsetWidth;flower.classList.add('active');sparkBurst(flower,12);openLetter(Number(flower.dataset.letter))}));
 
-    // Secuencia principal
-    function startSequence() {
-      const bouquet = document.getElementById('bouquet');
-      const scene1 = document.getElementById('scene1');
-      const scene2 = document.getElementById('scene2');
-      const scene3 = document.getElementById('scene3');
-      const card1 = document.getElementById('card1');
-      const card2 = document.getElementById('card2');
-      const card3 = document.getElementById('card3');
+function resetBouquet(){
+  bouquetCycle++;
+  const bouquet=document.getElementById('bouquet');
+  bouquet.classList.add('resetting');
+  flowers.forEach(f=>{f.classList.remove('read','bloomed','active');f.style.transform='';f.style.translate='';});
+  void bouquet.offsetWidth;
+  bouquet.classList.remove('resetting');
+  readLetters.clear();
+  flowers.forEach((f,i)=>setTimeout(()=>{f.classList.add('bloomed');sparkBurst(f,10);},250+i*310));
+  setTimeout(()=>showToast('🌻 Ya terminaste las 8… pero si quieres volver a leerlas, aquí están otra vez.',3600),900);
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLetter();closeField()}});
 
-      // Iniciar crecimiento del ramo
-      setTimeout(() => {
-        bouquet.classList.add('growing');
-      }, 400);
+const stage=document.getElementById('stage');
+function moveBouquet(x,y){const dx=(x-.5)*10,dy=(y-.5)*6;stage.querySelectorAll('.flower').forEach((f,i)=>f.style.translate=`${dx*(.2+(i%3)*.04)}px ${dy*(.18+(i%2)*.03)}px`);stage.querySelectorAll('.note').forEach((s,i)=>s.style.translate=`${dx*(.1+(i%2)*.03)}px ${dy*(.08+(i%3)*.02)}px`)}
+stage.addEventListener('pointermove',e=>{if(reader.classList.contains('show'))return;const r=stage.getBoundingClientRect();moveBouquet((e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height)});
+stage.addEventListener('pointerleave',()=>stage.querySelectorAll('.flower,.note').forEach(el=>el.style.translate='0 0'));
 
-      // Cambiar a tarjetas
-      setTimeout(() => {
-        scene1.classList.remove('active');
-        scene2.classList.add('active');
+setInterval(()=>{const s=document.createElement('div');s.className='particle';s.style.position='fixed';s.style.left=(8+Math.random()*84)+'vw';s.style.top=(14+Math.random()*70)+'vh';s.style.zIndex='5';s.style.opacity='0';document.body.appendChild(s);s.animate([{transform:'scale(.4)',opacity:0},{transform:'scale(1.35)',opacity:.95,offset:.45},{transform:'scale(.2)',opacity:0}],{duration:1700,easing:'ease-in-out'}).onfinish=()=>s.remove()},1100);
 
-        setTimeout(() => card1.classList.add('show'), 200);
-        setTimeout(() => card2.classList.add('show'), 700);
-        setTimeout(() => card3.classList.add('show'), 1200);
-      }, 8500);
-
-      // Volver al ramo un momento
-      setTimeout(() => {
-        scene2.classList.remove('active');
-        scene1.classList.add('active');
-      }, 16000);
-
-      // Pantalla final TikTok
-      setTimeout(() => {
-        scene1.classList.remove('active');
-        scene3.classList.add('active');
-      }, 21000);
-    }
-
-    // Iniciar todo
-    window.addEventListener('load', () => {
-      createParticles();
-      startSequence();
-    });
-  </script>
+/* Jardín infinito: camino en perspectiva + 1250 flores con tallo, hojas y pétalos.
+   La cámara avanza de forma suave para dar sensación de correr por un campo. */
+const field=document.getElementById('field'),canvas=document.getElementById('fieldCanvas'),ctx=canvas.getContext('2d'),moreBtn=document.getElementById('moreBtn'),fieldClose=document.getElementById('fieldClose');
+let W=0,H=0,flowersField=[],running=false,raf=0,lastT=0;
+function resizeCanvas(){const dpr=Math.min(window.devicePixelRatio||1,2);W=innerWidth;H=innerHeight;canvas.width=W*dpr;canvas.height=H*dpr;canvas.style.width=W+'px';canvas.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}
+function makeFlower(){return{side:Math.random()<.5?-1:1,lane:.08+Math.random()*.95,z:Math.random(),speed:.00075+Math.random()*.00115,size:.68+Math.random()*1.05,rot:(Math.random()-.5)*.5,hue:Math.random(),wob:Math.random()*6.28}}
+function initField(){flowersField=[];for(let i=0;i<1250;i++)flowersField.push(makeFlower())}
+function pathHalfWidth(y){const horizon=H*.39,bottom=H*1.03,t=Math.max(0,Math.min(1,(y-horizon)/(bottom-horizon)));return W*(0.028+0.315*Math.pow(t,1.32))}
+function drawBackground(){
+  const sky=ctx.createLinearGradient(0,0,0,H*.56);sky.addColorStop(0,'#7fc4d3');sky.addColorStop(.48,'#b9dfca');sky.addColorStop(1,'#f0d58a');ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+  const glow=ctx.createRadialGradient(W*.54,H*.24,0,W*.54,H*.24,W*.36);glow.addColorStop(0,'rgba(255,247,193,.60)');glow.addColorStop(1,'rgba(255,247,193,0)');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H*.65);
+  ctx.fillStyle='rgba(35,84,89,.58)';ctx.beginPath();ctx.moveTo(0,H*.37);for(let x=0;x<=W;x+=W/8){const y=H*(.34+Math.sin(x*.010+1.7)*.015+Math.sin(x*.023)*.009);ctx.lineTo(x,y)}ctx.lineTo(W,H*.5);ctx.lineTo(0,H*.5);ctx.closePath();ctx.fill();
+  ctx.fillStyle='rgba(56,113,84,.55)';ctx.beginPath();ctx.moveTo(0,H*.41);for(let x=0;x<=W;x+=W/12){const y=H*(.39+Math.sin(x*.016)*.012+Math.sin(x*.041+2)*.008);ctx.lineTo(x,y)}ctx.lineTo(W,H*.55);ctx.lineTo(0,H*.55);ctx.closePath();ctx.fill();
+  const grass=ctx.createLinearGradient(0,H*.4,0,H);grass.addColorStop(0,'#88ae4c');grass.addColorStop(.35,'#6a9e42');grass.addColorStop(1,'#2f6a30');ctx.fillStyle=grass;ctx.fillRect(0,H*.43,W,H*.57);
+  // Camino principal en perspectiva.
+  ctx.fillStyle='#c7c1a9';ctx.beginPath();ctx.moveTo(W*.495,H*.385);ctx.lineTo(W*.505,H*.385);ctx.lineTo(W*.88,H);ctx.lineTo(W*.10,H);ctx.closePath();ctx.fill();
+  const road=ctx.createLinearGradient(0,H*.38,0,H);road.addColorStop(0,'#ded9c4');road.addColorStop(.3,'#d4cdb4');road.addColorStop(1,'#a99f85');ctx.fillStyle=road;ctx.beginPath();ctx.moveTo(W*.499,H*.385);ctx.lineTo(W*.501,H*.385);ctx.lineTo(W*.89,H);ctx.lineTo(W*.11,H);ctx.closePath();ctx.fill();
+  // Bordes y huellas suaves.
+  ctx.strokeStyle='rgba(110,95,68,.22)';ctx.lineWidth=Math.max(1,W*.004);for(const side of [-1,1]){ctx.beginPath();ctx.moveTo(W*.5+side*W*.004,H*.388);ctx.lineTo(W*.5+side*W*.39,H);ctx.stroke()}
+  for(const ox of [-.11,.11]){ctx.beginPath();ctx.moveTo(W*.5+ox*W*.1,H*.44);ctx.quadraticCurveTo(W*.5+ox*W*.18,H*.66,W*.5+ox*W*.27,H);ctx.stroke()}
+}
+function drawStemAndFlower(x,y,scale,rot,alpha,seed){
+  const petalCount=10, petalW=6.2*scale, petalH=15.5*scale, stemH=34*scale;
+  ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y);
+  // tallo
+  ctx.strokeStyle=seed>.5?'#2c7437':'#356f33';ctx.lineWidth=Math.max(1,2.1*scale);ctx.lineCap='round';ctx.beginPath();ctx.moveTo(0,stemH*.72);ctx.quadraticCurveTo(1.5*scale,stemH*.3,-.4*scale,4*scale);ctx.stroke();
+  // hoja izquierda
+  ctx.save();ctx.translate(-.3*scale,stemH*.44);ctx.rotate(-.55+rot*.2);ctx.fillStyle='#4e8c38';ctx.beginPath();ctx.ellipse(-7*scale,0,10*scale,4.2*scale,-.32,0,Math.PI*2);ctx.fill();ctx.restore();
+  // hoja derecha
+  ctx.save();ctx.translate(.2*scale,stemH*.56);ctx.rotate(.55+rot*.18);ctx.fillStyle='#5f9a3f';ctx.beginPath();ctx.ellipse(7*scale,0,9.4*scale,4*scale,.32,0,Math.PI*2);ctx.fill();ctx.restore();
+  // flor girasol
+  ctx.translate(0,-2*scale);ctx.rotate(rot);
+  for(let i=0;i<petalCount;i++){ctx.save();ctx.rotate(i*Math.PI*2/petalCount);const g=ctx.createLinearGradient(0,-petalH,0,0);g.addColorStop(0,seed>.5?'#fff19a':'#ffe67a');g.addColorStop(.5,'#ffd451');g.addColorStop(1,'#e9ab23');ctx.fillStyle=g;ctx.beginPath();ctx.ellipse(0,-petalH*.56,petalW,petalH,0,0,Math.PI*2);ctx.fill();ctx.restore()}
+  const c=ctx.createRadialGradient(-2*scale,-2*scale,1,0,0,8*scale);c.addColorStop(0,'#8b6120');c.addColorStop(.55,'#5f3d11');c.addColorStop(1,'#2d1d0a');ctx.fillStyle=c;ctx.beginPath();ctx.arc(0,0,7.2*scale,0,Math.PI*2);ctx.fill();
+  // semillas/detalle
+  ctx.fillStyle='rgba(248,216,118,.6)';for(let i=0;i<7;i++){const a=i*0.92;ctx.beginPath();ctx.arc(Math.cos(a)*3.2*scale,Math.sin(a)*3.2*scale,.75*scale,0,Math.PI*2);ctx.fill()}
+  ctx.restore();
+}
+function animateField(t){if(!running)return;const dt=Math.min(32,lastT? t-lastT:16);lastT=t;drawBackground();
+  flowersField.sort((a,b)=>a.z-b.z);
+  for(const f of flowersField){f.z+=f.speed*(dt/16.67);f.wob+=.008*(dt/16.67);if(f.z>1.12){Object.assign(f,makeFlower(),{z:.025+Math.random()*.035})}
+    const d=f.z;const y=H*.39+Math.pow(d,1.22)*H*.72;const ph=pathHalfWidth(y);const lateral=W*(.028+f.lane*.34)*Math.pow(.6+d,1.05);let x=W/2+f.side*(ph+lateral);
+    const perspective=.25+Math.pow(d,1.7)*2.35;const scale=Math.max(.08,f.size*perspective);const alpha=Math.max(.05,Math.min(1,.10+d*1.15));
+    // algunas flores quedan un poco delante/detrás para que el campo se vea profundo.
+    const groundTilt=(f.wob%1-.5)*.18;drawStemAndFlower(x,y,scale,groundTilt,alpha,f.hue);
+    if(d>.66){ctx.save();ctx.globalAlpha=Math.min(.3,(d-.66)*.7);ctx.strokeStyle='rgba(44,101,39,.35)';ctx.lineWidth=Math.max(1,scale*.8);ctx.beginPath();ctx.moveTo(x,y+11*scale);ctx.lineTo(x+Math.sin(f.wob)*4*scale,y+26*scale);ctx.stroke();ctx.restore()}
+  }
+  // briznas laterales para reforzar el desplazamiento.
+  ctx.save();for(let i=0;i<90;i++){const side=i%2?-1:1;const y=H*.49+(i/90)*H*.46;const edge=pathHalfWidth(y);const x=W/2+side*(edge+4+((i*37)%100)/100*W*.04);ctx.strokeStyle=`rgba(45,101,37,${.12+(i%5)*.025})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,y+8);ctx.lineTo(x+side*(4+(i%4)),y-((i%5)*3+4));ctx.stroke()}ctx.restore();
+  raf=requestAnimationFrame(animateField)
+}
+function openField(){resizeCanvas();initField();field.classList.add('show');field.setAttribute('aria-hidden','false');running=true;lastT=0;document.body.style.overflow='hidden';cancelAnimationFrame(raf);raf=requestAnimationFrame(animateField)}
+function closeField(){running=false;field.classList.remove('show');field.setAttribute('aria-hidden','true');document.body.style.overflow='';cancelAnimationFrame(raf)}
+moreBtn.addEventListener('click',openField);fieldClose.addEventListener('click',e=>{e.stopPropagation();closeField()});field.addEventListener('pointerdown',e=>{if(e.target===field)closeField()});window.addEventListener('resize',()=>{if(field.classList.contains('show'))resizeCanvas()});
+</script>
 </body>
 </html>
